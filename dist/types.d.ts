@@ -117,6 +117,11 @@ export interface TranscriptData {
     lastCompactPostTokens?: number;
     advisorModel?: string;
 }
+export interface DailyCostData {
+    todayCost: number;
+    monthCost: number;
+    fetchedAt: number;
+}
 export interface RenderContext {
     stdin: StdinData;
     transcript: TranscriptData;
@@ -134,5 +139,6 @@ export interface RenderContext {
     claudeCodeVersion?: string;
     effortLevel?: string;
     effortSymbol?: string;
+    dailyCost: DailyCostData | null;
 }
 //# sourceMappingURL=types.d.ts.map
