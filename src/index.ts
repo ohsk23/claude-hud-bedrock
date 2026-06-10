@@ -12,6 +12,7 @@ import { applyContextWindowFallback } from "./context-cache.js";
 import { getUsageFromExternalSnapshot, writeExternalUsageSnapshot } from "./external-usage.js";
 import { setLanguage, t } from "./i18n/index.js";
 import type { RenderContext } from "./types.js";
+import { getDailyCostData } from './ccusage.js';
 
 export { getUsageFromExternalSnapshot, writeExternalUsageSnapshot } from "./external-usage.js";
 import { fileURLToPath } from "node:url";
@@ -147,6 +148,7 @@ export async function main(overrides: Partial<MainDeps> = {}): Promise<void> {
       claudeCodeVersion,
       effortLevel: effortInfo?.level,
       effortSymbol: effortInfo?.symbol,
+      dailyCost: getDailyCostData(),
     };
 
     deps.render(ctx);
