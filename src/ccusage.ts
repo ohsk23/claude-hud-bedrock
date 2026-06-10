@@ -4,22 +4,20 @@ import type { DailyCostData } from './types.js';
 const CACHE_TTL_MS = 30_000;
 let cache: DailyCostData | null = null;
 
-export function parseDailyCostData(dailyJson: string, summaryJson: string): Omit<DailyCostData, 'fetchedAt'> {
-  const daily: Array<{ date: string; cost: number }> = JSON.parse(dailyJson);
-  const summary: { totalCost: number } = JSON.parse(summaryJson);
+export function parseDailyCostData(dailyJson: string): Omit<DailyCostData, 'fetchedAt'> {
+  const data: { daily: Array<{ period: string; totalCost: number }>; totals: { totalCost: number } } = JSON.parse(dailyJson);
   const today = new Date().toISOString().slice(0, 10);
-  const todayEntry = daily.find((d) => d.date === today);
+  const todayEntry = data.daily.find((d) => d.period === today);
   return {
-    todayCost: todayEntry?.cost ?? 0,
-    monthCost: summary.totalCost ?? 0,
+    todayCost: todayEntry?.totalCost ?? 0,
+    monthCost: data.totals?.totalCost ?? 0,
   };
 }
 
 function runCcusage(): DailyCostData | null {
   try {
     const dailyRaw = execSync('bunx ccusage daily --json', { timeout: 3000 }).toString();
-    const summaryRaw = execSync('bunx ccusage --json', { timeout: 3000 }).toString();
-    return { ...parseDailyCostData(dailyRaw, summaryRaw), fetchedAt: Date.now() };
+    return { ...parseDailyCostData(dailyRaw), fetchedAt: Date.now() };
   } catch {
     return null;
   }
