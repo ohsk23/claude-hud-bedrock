@@ -22,7 +22,7 @@ The last line shows **today's cost / this month's cumulative cost**, updated eve
 **1. Clone and build**
 
 ```bash
-git clone https://github.com/nina-oh/claude-hud-bedrock.git
+git clone https://github.com/ohsk23/claude-hud-bedrock.git
 cd claude-hud-bedrock
 npm install
 npm run build
