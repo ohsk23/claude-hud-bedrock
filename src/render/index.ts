@@ -17,6 +17,7 @@ import {
   renderMemoryLine,
   renderSessionTokensLine,
   renderSessionTimeLine,
+  renderDailyCostLine,
 } from './lines/index.js';
 import { dim, RESET } from './colors.js';
 import { getTerminalWidth, UNKNOWN_TERMINAL_WIDTH } from '../utils/terminal.js';
@@ -408,6 +409,8 @@ function renderElementLine(
       return renderMemoryLine(ctx);
     case 'environment':
       return renderEnvironmentLine(ctx);
+    case 'daily-cost':
+      return renderDailyCostLine(ctx);
     case 'tools':
       return display?.showTools === false ? null : renderToolsLine(ctx);
     case 'skills':
