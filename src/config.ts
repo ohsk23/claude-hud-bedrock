@@ -34,7 +34,8 @@ export type HudElement =
   | 'mcp'
   | 'agents'
   | 'todos'
-  | 'sessionTime';
+  | 'sessionTime'
+  | 'daily-cost';
 
 export type AddedDirsLayout = 'inline' | 'line';
 export type HudColorName =
@@ -80,6 +81,7 @@ export const DEFAULT_ELEMENT_ORDER: HudElement[] = [
   'agents',
   'todos',
   'sessionTime',
+  'daily-cost',
 ];
 
 export const DEFAULT_MERGE_GROUPS: HudElement[][] = [
@@ -139,6 +141,7 @@ export interface HudConfig {
     showOutputStyle: boolean;
     showSessionStartDate: boolean;
     showLastResponseAt: boolean;
+    showDailyCost: boolean;
     mergeGroups: HudElement[][];
     autocompactBuffer: AutocompactBufferMode;
     contextWarningThreshold: number;
@@ -218,6 +221,7 @@ export const DEFAULT_CONFIG: HudConfig = {
     showOutputStyle: false,
     showSessionStartDate: false,
     showLastResponseAt: false,
+    showDailyCost: true,
     mergeGroups: DEFAULT_MERGE_GROUPS.map(group => [...group]),
     autocompactBuffer: 'enabled',
     contextWarningThreshold: 70,
@@ -641,6 +645,9 @@ export function mergeConfig(userConfig: Partial<HudConfig>): HudConfig {
     showLastResponseAt: typeof migrated.display?.showLastResponseAt === 'boolean'
       ? migrated.display.showLastResponseAt
       : DEFAULT_CONFIG.display.showLastResponseAt,
+    showDailyCost: typeof migrated.display?.showDailyCost === 'boolean'
+      ? migrated.display.showDailyCost
+      : DEFAULT_CONFIG.display.showDailyCost,
     mergeGroups: validateMergeGroups(migrated.display?.mergeGroups),
     autocompactBuffer: validateAutocompactBuffer(migrated.display?.autocompactBuffer)
       ? migrated.display.autocompactBuffer
